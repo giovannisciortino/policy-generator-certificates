@@ -2,7 +2,7 @@ apiVersion: app.k8s.io/v1beta1
 kind: Application
 metadata:
   name: policygen-certificates
-  namespace: secret-test
+  namespace: policy-generator
 spec:
   componentKinds:
     - group: apps.open-cluster-management.io
@@ -21,7 +21,7 @@ metadata:
   annotations:
     apps.open-cluster-management.io/reconcile-rate: medium
   name: policygen-certificates-channel
-  namespace: secret-test
+  namespace: policy-generator
 spec:
   type: Git
   pathname: https://github.com/giovannisciortino/policy-generator-certificates.git
@@ -36,16 +36,16 @@ metadata:
   labels:
     app: policygen-certificates
   name: pol-gen-zcx-openshift-logging-sub
-  namespace: secret-test
+  namespace: policy-generator
 spec:
   allow:
     - apiVersion: policy.open-cluster-management.io/v1
       kinds:
         - "*"
-    - apiVersion: apps.open-cluster-management.io/v1
+    - apiVersion: cluster.open-cluster-management.io/v1beta1
       kinds:
-        - PlacementRule
-  channel: secret-test/policygen-certificates-channel
+        - Placement
+  channel: policy-generator/policygen-certificates-channel
   placement:
     placementRef:
       kind: Placement
@@ -54,7 +54,7 @@ spec:
 apiVersion: cluster.open-cluster-management.io/v1beta2
 kind: ManagedClusterSetBinding
 metadata:
-  namespace: secret-test
+  namespace: policy-generator
   name: global
 spec:
   clusterSet: global
@@ -63,7 +63,7 @@ apiVersion: cluster.open-cluster-management.io/v1beta1
 kind: Placement
 metadata:
   name: policygen-certificates-placement
-  namespace: secret-test
+  namespace: policy-generator
 spec:
   predicates:
   - requiredClusterSelector:
@@ -75,3 +75,12 @@ spec:
       operator: Exists
     - key: cluster.open-cluster-management.io/unavailable
       operator: Exists
+---
+apiVersion: cluster.open-cluster-management.io/v1beta2
+kind: ManagedClusterSetBinding
+metadata:
+  namespace: secret-test
+  name: global
+spec:
+  clusterSet: global
+
