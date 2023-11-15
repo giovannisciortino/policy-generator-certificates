@@ -1,0 +1,26 @@
+apiVersion: cluster.open-cluster-management.io/v1beta1
+kind: Placement
+metadata:
+  name: certificates-placement-noprod
+  namespace: secret-test
+spec:
+  clusterSets:
+  - global
+  predicates:
+  - requiredClusterSelector:
+      labelSelector:
+        matchExpressions:
+        - key: deploy-tls-certificates
+          operator: In
+          values:
+          - "true"
+        - key: env
+          operator: In
+          values:
+          - "noprod"
+  tolerations:
+  - key: cluster.open-cluster-management.io/unreachable
+    operator: Exists
+  - key: cluster.open-cluster-management.io/unavailable
+    operator: Exists
+

@@ -1,0 +1,22 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: PolicyGenerator
+metadata:
+  name: policy-certificates
+policyDefaults:
+  namespace: secret-test
+  severity: medium
+policies:
+  - name: policy-certificates-noprod
+    manifests:
+      - path: ./certificates-manifest-noprod
+    placement:
+      placementPath: ./placement-certificates-noprod.yaml
+    disabled: false
+    remediationAction: enforce
+  - name: policy-certificates-prod
+    manifests:
+      - path: ./certificates-manifest-prod
+    placement:
+      placementPath: ./placement-certificates-prod.yaml
+    disabled: false
+    remediationAction: enforce

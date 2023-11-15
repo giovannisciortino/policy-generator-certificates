@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: certificate1
+  namespace: test1
+type: kubernetes.io/tls
+data:
+  tls.crt: '{{hub fromSecret "secret-test" "certificate1" "tls.crt" hub}}' 
+  tls.key: '{{hub fromSecret "secret-test" "certificate1" "tls.key" hub}}' 
