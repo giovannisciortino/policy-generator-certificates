@@ -35,7 +35,7 @@ metadata:
     apps.open-cluster-management.io/reconcile-option: merge
   labels:
     app: policygen-certificates
-  name: pol-gen-zcx-openshift-logging-sub
+  name: pol-gen-certificates-sub
   namespace: policy-generator
 spec:
   allow:
